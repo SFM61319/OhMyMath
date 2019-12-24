@@ -20,10 +20,6 @@ from os import path, system, mkdir
 from tkinter import *
 from tkinter import messagebox as mb
 
-## Importing required functions to change attributes of a folder
-from win32api import SetFileAttributes as sfa
-from win32con import FILE_ATTRIBUTE_HIDDEN as fah, FILE_ATTRIBUTE_READONLY as far
-
 try:
     ## Importing `numpy` as `np` for `linspace` (arrays), and mathematical functions
     import numpy as np
@@ -34,9 +30,13 @@ try:
     ## Importing `gamma` function for `factorial` of an array to plot graphs
     from scipy.special import gamma
 
+	## Importing required functions to change attributes of a folder
+	from win32api import SetFileAttributes as sfa
+	from win32con import FILE_ATTRIBUTE_HIDDEN as fah, FILE_ATTRIBUTE_READONLY as far
+
 except ModuleNotFoundError or ImportError:
     ## Using `cmd.exe` to install required packages using `pip`
-    system("pip install numpy && pip install matplotlib && pip install scipy && exit")
+    system("pip install numpy && pip install matplotlib && pip install scipy && pip install pywin32 && exit")
 
     ## Importing `numpy` as `np` for `linspace` (arrays), and mathematical functions
     import numpy as np
@@ -46,6 +46,14 @@ except ModuleNotFoundError or ImportError:
 
     ## Importing `gamma` function for `factorial` of an array to plot graphs
     from scipy.special import gamma
+	
+	try:
+		## Importing required functions to change attributes of a folder
+		from win32api import SetFileAttributes as sfa
+		from win32con import FILE_ATTRIBUTE_HIDDEN as fah, FILE_ATTRIBUTE_READONLY as far
+	
+	except:
+		pass
 
 ## Importing `load`, `dump` for dictionary of email-name pair as key-value pair from `json` module
 from json import load, dump
