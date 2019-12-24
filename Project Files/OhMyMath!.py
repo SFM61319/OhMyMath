@@ -51,7 +51,7 @@ except ModuleNotFoundError or ImportError:
 		## Importing required functions to change attributes of a folder
 		from win32api import SetFileAttributes as sfa
 		from win32con import FILE_ATTRIBUTE_HIDDEN as fah, FILE_ATTRIBUTE_READONLY as far
-	
+
 	except:
 		pass
 
