@@ -34,7 +34,7 @@ try:
     ## Importing `gamma` function for `factorial` of an array to plot graphs
     from scipy.special import gamma
 
-except ImportError:
+except ModuleNotFoundError or ImportError:
     ## Using `cmd.exe` to install required packages using `pip`
     system("pip install numpy && pip install matplotlib && pip install scipy && exit")
 
@@ -1437,9 +1437,9 @@ if (__name__ == "__main__"):
         print()
 
 
-    exit()
+exit()
 
 
-    ##################################################
-    ###"""##### ----- End Of Program ----- #####"""###
-    ##################################################
+##################################################
+###"""##### ----- End Of Program ----- #####"""###
+##################################################
