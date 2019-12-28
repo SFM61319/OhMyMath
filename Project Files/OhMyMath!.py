@@ -69,6 +69,7 @@ print("Loaded!")
 
 ## Globally declaring constants
 x = np.arange(-10, 10.001, 0.001)
+inf = float('inf')
 
 ## Taking email ID for confirmation and to check if user is new or existing
 email = input("Email :- ")
@@ -93,7 +94,7 @@ def evalall(string1):   ## Advanced `evalall()` function to evaluate mathematica
     string1 = string1.replace('•', '*')
     string1 = string1.replace('÷', '/')
     string1 = string1.replace('^', '**')
-    string1 = string1.replace('∞', str(float('inf')))
+    string1 = string1.replace('∞', str(inf))
     string1 = string1.replace('sin(', 'm.sin(')
     string1 = string1.replace('cos(', 'm.cos(')
     string1 = string1.replace('tan(', 'm.tan(')
@@ -132,7 +133,7 @@ def evalall(string1):   ## Advanced `evalall()` function to evaluate mathematica
     number = a + b * 1j
     if (round(a, 8) == 0):
     	a = 0
-    	return f'{int(b)}ι'
+    	return f'{b}ι'
     if (int(round(b, 8)) == 0):
     	b = 0
     	return int(a)
@@ -170,7 +171,10 @@ def evalfunction(string1="x"): ## Function `evalfunction` to evaluate a given ma
     string1 = string1.replace('log(', 'np.log10(')
     string1 = string1.replace('log2(', 'np.log2(')
     string1 = string1.replace('sqrt(', 'np.sqrt(')
-    equation = eval(string1)
+    try:
+        equation = eval(string1)
+    except ZeroDivisionError:
+        equation = inf
     return equation
 
 
@@ -532,6 +536,10 @@ def evaluate():   ## Function to evaluate the final expression
         ## evalall() function evaluate the expression and str function convert the result into string
         expression = str(evalall(expression))
         equation.set(expression)
+
+    except ZeroDivisionError:
+        equation.set('∞')
+        expression = ""
 
     ## If error is generated, then handles it by the except block
     except:
