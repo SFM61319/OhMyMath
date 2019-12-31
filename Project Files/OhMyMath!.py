@@ -121,22 +121,36 @@ def evalall(string1):   ## Advanced `evalall()` function to evaluate mathematica
         if (int(number) == number):
             number = int(number)
         return number
-    
+	
     a = number.real
     b = number.imag
-	number = a + (b * 1j)
+    number = a + (b * 1j)
     if (round(a, 8) == 0):
-    	a = 0
+        a = 0
+        if not (round(b, 8) == 0):
+            if (b == int(b)):
+                b = int(b)
+            number = b * 1j
+        else:
+            number = b = 0
     if (round(b, 8) == 0):
-    	b = 0
-		number = number.real
+        b = 0
+        if not (round(a, 8) == 0):
+            if (a == int(a)):
+                a = int(a)
+            number = a
+        else:
+            number = 0
     if (number == (-1+1.2246467991473532e-16j)):
-    	return -1
+        return -1
     if (number == (0.20787957635076193+0j)):
         return 0.20787957635076193
-    return f'{number.real} + ({number.imag})ι'
-    
-
+    if (number == 1j):
+        number = 'ι'
+    if (number == (0+0j)):
+        return 0
+    return str(number).replace('1j', 'ι').replace('j', 'ι').replace('(', '').replace(')', '').replace('+', ' + ').replace('-', ' - ').replace(' - 0 ', '').replace(' + 0 ', '').replace(' - 0ι', '').replace(' + 0ι', '')
+   
 
 
 
