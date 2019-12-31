@@ -69,8 +69,6 @@ from json import load, dump
 ## Importing `choice` from `random` module
 from random import choice as ch
 
-print("Loaded!")
-
 ## Globally declaring constants
 x = np.arange(-10, 10.001, 0.001)
 inf = float('inf')
@@ -498,10 +496,14 @@ class HoverButton(Button):
         self.bind("<Leave>", self.onLeave)
 
     def onEnter(self, e):
+        global s
+        s(0.015)
         self["foreground"] = self["activeforeground"]
         self["background"] = self["activebackground"]
 
     def onLeave(self, e):
+        global s
+        s(0.015)
         self["foreground"] = self.defaultForeground
         self["background"] = self.defaultBackground
         
@@ -519,6 +521,11 @@ def press(num): ## Function to update expression in the text entry box
         ## Special case for factorials
         expression = 'fact(' + str(expression) + ')'
     else:
+        operatorList = [' + ', ' - ', ' × ', ' ÷ ']
+        if (expression != ''):
+            if ((expression[-1] == ' ') and (str(num) in operatorList)): ## For replacing operators
+                if not (((str(num) == ' - ') or (str(num) == ' + ')) and ((expression[-3: len(expression): 1] == ' × ') or (expression[-3: len(expression): 1] == ' ÷ '))):
+                    expression = expression[0: -3: 1]
         ## Concatenation of string 
         expression += str(num) 
 
@@ -571,7 +578,7 @@ def baseConvertingCalculator():
                 res += whole
         else:
             res = bin(number)     
-        equation.set(str(res)[2::])
+        equation.set(str(res)[2: len(str(res)): 1])
 
     ## Function converts the value passed as parameter to it's decimal representation
     def binaryToDecimal(number):
