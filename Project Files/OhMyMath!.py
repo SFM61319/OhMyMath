@@ -1,5 +1,5 @@
 
-print("Loading required files...")
+print("Loading...")
 
 ## Importing all required modules
 
@@ -110,9 +110,6 @@ def evalall(string1):   ## Advanced `evalall()` function to evaluate mathematica
     string1 = string1.replace('log2(', 'm.log2(')
     string1 = string1.replace('√(', 'm.sqrt(')
 
-    if (string1 == str(1j ** 1j)):
-        return f'e^(-π/2) = {m.e ** (-m.pi / 2)}'
-
     number = eval(string1)
     if (type(number) != complex):	## `number` is Real; Real Numbers set is a subset of Imaginary Numbers set
         if (number >= 9999999999999999):
@@ -127,17 +124,16 @@ def evalall(string1):   ## Advanced `evalall()` function to evaluate mathematica
     
     a = number.real
     b = number.imag
-    number = a + b * 1j
+	number = a + (b * 1j)
     if (round(a, 8) == 0):
     	a = 0
-    	return f'{b}ι'
-    if (int(round(b, 8)) == 0):
+    if (round(b, 8) == 0):
     	b = 0
-    	return int(a)
+		number = number.real
     if (number == (-1+1.2246467991473532e-16j)):
     	return -1
-    if (number == 1j):
-    	return '√-1'
+    if (number == (0.20787957635076193+0j)):
+        return 0.20787957635076193
     return f'{number.real} + ({number.imag})ι'
     
 
