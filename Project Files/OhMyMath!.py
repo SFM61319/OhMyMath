@@ -105,9 +105,9 @@ def evalall(string1):   ## Advanced `evalall()` function to evaluate mathematica
     string1 = string1.replace('sec(', '1/m.cos(')
     string1 = string1.replace('cot(', '1/m.tan(')
     string1 = string1.replace('fact(', 'm.gamma(1+')
-    string1 = string1.replace('ln(', '2.302585092994046*log(')
     string1 = string1.replace('log(', 'm.log10(')
     string1 = string1.replace('log2(', 'm.log2(')
+    string1 = string1.replace('ln(', 'm.log(')
     string1 = string1.replace('√(', 'm.sqrt(')
 
     number = eval(string1)
@@ -121,7 +121,7 @@ def evalall(string1):   ## Advanced `evalall()` function to evaluate mathematica
         if (int(number) == number):
             number = int(number)
         return number
-	
+    
     a = number.real
     b = number.imag
     number = a + (b * 1j)
@@ -150,7 +150,7 @@ def evalall(string1):   ## Advanced `evalall()` function to evaluate mathematica
     if (number == (0+0j)):
         return 0
     return str(number).replace('1j', 'ι').replace('j', 'ι').replace('(', '').replace(')', '').replace('+', ' + ').replace('-', ' - ').replace(' - 0 ', '').replace(' + 0 ', '').replace(' - 0ι', '').replace(' + 0ι', '')
-   
+    
 
 
 
@@ -174,9 +174,9 @@ def evalfunction(string1="x"): ## Function `evalfunction` to evaluate a given ma
     string1 = string1.replace('sec(', '1/np.cos(')
     string1 = string1.replace('cot(', '1/np.tan(')
     string1 = string1.replace('fact(', 'gamma(')
-    string1 = string1.replace('ln(', '2.302585092994046*log(')
     string1 = string1.replace('log(', 'np.log10(')
     string1 = string1.replace('log2(', 'np.log2(')
+    string1 = string1.replace('ln(', 'm.log(')
     string1 = string1.replace('sqrt(', 'np.sqrt(')
     try:
         equation = eval(string1)
