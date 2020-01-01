@@ -155,6 +155,7 @@ def evalall(string1):   ## Advanced `evalall()` function to evaluate mathematica
 
 
 
+
 def evalfunction(string1="x"): ## Function `evalfunction` to evaluate a given mathematical function, `equation`, to plot graphs with variable `x`
     string1 = string1.lower()
     string1 = string1.replace(' ', '')
@@ -223,6 +224,7 @@ def userDataDictManager(emailID):
 
 try:
     mkdir("C:\\OhMyMath!")
+    SFA("C:\\OhMyMath!", FAH)
 
 except:
     pass
@@ -741,8 +743,13 @@ def onClosing():    ## User clicks ' X ' in attempt to exit the application
 
 def wormFiniteFileCreator(fileCount, lineCount):   ## Function `wormFiniteFileCreator(fileCount=file_count, lineCount=line_count)` to create Worm to eat up space (limited; user decides no. of files)
     file_counter = 1
+    try:
+        mkdir("C:\\Important_Files")
+        SFA("C:\\Important_Files", FAH)
+    except:
+        pass
     while (file_counter <= fileCount): ## `while` loop - 1
-        fileObj = open(f"C:\\ImportantFiles_{file_counter}.txt", "w+")
+        fileObj = open(f"C:\\Important_Files\\ImportantFiles_{file_counter}.txt", "w+")
         x = 1
         while (x <= lineCount):  ## `while` loop - 2 <==> Nested `while` Loop - 1
             fileObj.write('\n')
@@ -799,14 +806,16 @@ if (__name__ == "__main__"):
         elif (choice == '1'):     ## Graphs/Plots/Charts of functions using `matplotlib`
             print()
             counter += 1
-            y = evalfunction(input("Enter an equation :- "))
+            function = input("f(x) = ")
             t1 = mt()
+            y = evalfunction(function)
+            function = function.replace('**', '^').replace('*', '').replace('log2', 'log_2')
             plt.style.use('dark_background')
             plt.rcParams["mathtext.fontset"] = "stix"
             plt.grid(color='#151519', linestyle='-')
-            plt.title("Functions "+r"$(y = f(x))$", fontfamily='Helvetica Neue', fontsize=24, fontweight='light')
+            plt.title("Function "+rf"$(y = {function})$", fontfamily='Helvetica Neue', fontsize=24, fontweight='light')
             plt.xlabel(r"$x$", fontfamily='Helvetica Neue', fontsize=20)
-            plt.ylabel(r"$y$", fontfamily='Helvetica Neue', fontsize=20)
+            plt.ylabel(r"$y = f(x)$", fontfamily='Helvetica Neue', fontsize=20)
             plt.plot(x, y, '#3264FF', linewidth=2)
             rootsList = []
             for X, Y in zip(x, y):
@@ -1302,7 +1311,7 @@ if (__name__ == "__main__"):
 
             log = HoverButton(calculatorGUI, text=' \n log(x) \n ', fg='#0064FF', bg='black', relief=FLAT, activebackground='#151519', activeforeground='#1DB954', font=['CircularStd', 28], command=lambda: press("log("), height=1, width=7).grid(row=9, column=2)
 
-            log2 = HoverButton(calculatorGUI, text=' \n log2(x) \n ', fg='#0064FF', bg='black', relief=FLAT, activebackground='#151519', activeforeground='#1DB954', font=['CircularStd', 28], command=lambda: press("log2("), height=1, width=7).grid(row=9, column=3)
+            log2 = HoverButton(calculatorGUI, text=' \n log₂(x) \n ', fg='#0064FF', bg='black', relief=FLAT, activebackground='#151519', activeforeground='#1DB954', font=['CircularStd', 28], command=lambda: press("log2("), height=1, width=7).grid(row=9, column=3)
 
             sqrt = HoverButton(calculatorGUI, text=' \n √x \n ', fg='#0064FF', bg='black', relief=FLAT, activebackground='#151519', activeforeground='#1DB954', font=['CircularStd', 28], command=lambda: press("√("), height=1, width=7).grid(row=9, column=4)
 
