@@ -1,4 +1,7 @@
 
+##### I have to add a feature that returns approximate value of the result if '=' is double-clicked or even clicked twice.
+##### I have to bind respective keys to buttons in the calculator GUI.
+
 print("Loading...")
 
 ## Importing all required modules
